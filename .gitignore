@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Veritabani sifresi gibi kisisel ayarlar (repoya yuklenmez)
+app/config.py
+.env
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Isletim sistemi
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Office gecici dosyalari
+~$*
