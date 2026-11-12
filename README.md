@@ -32,7 +32,7 @@ PostgreSQL, Python (psycopg2), Tkinter
 
 ## Ekip
 
-- Veronika Liashenko – reçete ve ilaç kısmı, veritabanı bağlantısı, ana menü
+- Veronika – reçete ve ilaç kısmı, veritabanı bağlantısı, ana menü
 - Eray – hasta ve randevu kısmı
 - Sude – doktor, bölüm ve muayene kısmı
 
