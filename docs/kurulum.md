@@ -39,8 +39,10 @@ Hata alırsan python.org adresinden Python'u indir ve kur. Kurulumun ilk ekranı
 Sonra kütüphaneyi kur:
 
 ```
-pip install psycopg2-binary
+python -m pip install psycopg2-binary
 ```
+
+Not: Windows'ta sadece `pip install` yazınca "pip bulunamadı" hatası alınabiliyor, o yüzden `python -m pip` şeklinde yazmak daha garanti.
 
 ## 4. Bağlantı testi
 
