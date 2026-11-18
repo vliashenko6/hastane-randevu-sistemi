@@ -17,7 +17,7 @@ ORDER BY hasta_sayisi DESC, b.bolum_adi;
 -- Sorgu 2: Doktor başına muayene sayısı
 -- Muayene, randevu üzerinden doktora bağlanır (muayene -> randevu -> doktor).
 -- Hiç muayene yapmamış doktor da 0 ile görünür.
-SELECT d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
+SELECT COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad AS doktor,
        b.bolum_adi,
        COUNT(m.muayene_id) AS muayene_sayisi
 FROM doktor d
@@ -46,7 +46,7 @@ LIMIT 5;
 -- (Not: "Hiç randevusu olmayan doktor" diye sorulsaydı örnek verilerde sonuç boş çıkardı,
 -- çünkü 10 doktorun hepsinin en az bir randevusu var.)
 SELECT d.doktor_id,
-       d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
+       COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad AS doktor,
        b.bolum_adi
 FROM doktor d
 JOIN bolum b ON b.bolum_id = d.bolum_id
