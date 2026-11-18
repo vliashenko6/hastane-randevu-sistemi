@@ -46,34 +46,13 @@ Not: Windows'ta sadece `pip install` yazınca "pip bulunamadı" hatası alınabi
 
 ## 4. Bağlantı testi
 
-Aşağıdaki kodu `baglanti_testi.py` adıyla kendi bilgisayarında bir yere kaydet. Şifreni kendi yazıyorsun, bu dosyayı GitHub'a yüklemeyin.
-
-```python
-import psycopg2
-
-baglanti = psycopg2.connect(
-    host="localhost",
-    port=5432,
-    dbname="hastane_randevu",
-    user="postgres",
-    password="SIFREN",
-)
-
-imlec = baglanti.cursor()
-imlec.execute("SELECT version();")
-print(imlec.fetchone()[0])
-
-imlec.close()
-baglanti.close()
-```
-
-Çalıştır:
+Bağlantı testini uygulamanın kendi dosyasıyla yapıyoruz. `app/config.example.py` dosyasını `app/config.py` adıyla kopyala, içindeki `password` kısmına kendi şifreni yaz. Sonra `app` klasöründe şunu çalıştır (Mac'te `python3`):
 
 ```
-python baglanti_testi.py
+python db.py
 ```
 
-Ekrana PostgreSQL sürümü yazıyorsa her şey tamam.
+PostgreSQL sürümü ve tablolardaki kayıt sayıları yazılırsa bağlantı tamamdır. `config.py` GitHub'a yüklenmez, şifreni sadece sen yazarsın.
 
 ## 5. Tabloları ve örnek verileri kurma
 
@@ -82,6 +61,8 @@ Repo klasöründeyken şu komut tüm tabloları ve örnek verileri sırayla kura
 ```
 psql -U postgres -d hastane_randevu -f sql/00_kurulum.sql
 ```
+
+Windows'ta `psql` bulunamazsa tam yolunu yaz: `"C:\Program Files\PostgreSQL\18\bin\psql.exe" -U postgres -d hastane_randevu -f sql/00_kurulum.sql`
 
 Komut `postgres` kullanıcısının şifresini sorar. Dosya ikinci kez çalıştırılırsa eski tabloları silip baştan kurar, yani örnek veriler sıfırlanır.
 
