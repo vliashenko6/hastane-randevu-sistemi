@@ -30,7 +30,10 @@ PostgreSQL, Python (psycopg2), Tkinter
   - `sql/sorgular/` → bilgi alma sorguları (SELECT)
 - `app/` → Python uygulaması
 - `docs/` → gereksinimler, ER ve UML diyagramları, ilişkisel şema, proje planı
+  - `docs/testler/` → ekip içi test raporları
+  - `docs/sunum/` → canlı demo senaryoları
 - `rapor/` → proje raporu
+- `sunum/` → sunum dosyası
 
 ## Kurulum ve Çalıştırma
 
