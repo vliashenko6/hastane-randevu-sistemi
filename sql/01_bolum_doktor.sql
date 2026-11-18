@@ -1,5 +1,5 @@
 -- Bölüm ve doktor tabloları
--- Hazırlayan: Eray
+-- Hazırlayan: Sude (ilk sürüm: Eray)
 -- Çalıştırma sırası: 1. dosya (hasta_randevu ve muayene_teshis bu tablolara bağlanır)
 
 CREATE TABLE bolum (
@@ -39,7 +39,8 @@ INSERT INTO doktor (doktor_id, bolum_id, ad, soyad, unvan, telefon) VALUES
     (6, 3, 'Zeynep','Arslan', 'Uzm. Dr.',  NULL),
     (7, 4, 'Burak', 'Çelik',  'Uzm. Dr.',  '02160000107'),
     (8, 4, 'Aylin', 'Koç',    'Doç. Dr.',  '02160000108'),
-    (9, 5, 'Oğuz',  'Polat',  'Uzm. Dr.',  '02160000109');
+    (9, 5, 'Oğuz',  'Polat',  'Uzm. Dr.',  '02160000109'),
+    (10, 5, 'Deniz', 'Yalçın', 'Op. Dr.',   '02160000110');
 
 SELECT setval(pg_get_serial_sequence('bolum', 'bolum_id'), (SELECT MAX(bolum_id) FROM bolum));
 SELECT setval(pg_get_serial_sequence('doktor', 'doktor_id'), (SELECT MAX(doktor_id) FROM doktor));
