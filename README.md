@@ -32,17 +32,38 @@ PostgreSQL, Python (psycopg2), Tkinter
 - `docs/` → gereksinimler, ER ve UML diyagramları, ilişkisel şema, proje planı
 - `rapor/` → proje raporu
 
-## Kurulum
+## Kurulum ve Çalıştırma
 
-1. PostgreSQL ve Python kurulumu için: [docs/kurulum.md](docs/kurulum.md)
-2. `hastane_randevu` adında boş bir veritabanı oluştur.
-3. Repo klasöründe şu komutla bütün tabloları ve örnek verileri kur:
+1. PostgreSQL 18 ve Python 3 kurulumu için: [docs/kurulum.md](docs/kurulum.md)
+2. `hastane_randevu` adında boş bir veritabanı oluştur (pgAdmin'de Databases → Create → Database).
+3. Repo klasöründe şu komutla bütün tabloları ve örnek verileri kur. Komut `postgres` kullanıcısının şifresini sorar.
 
 ```
 psql -U postgres -d hastane_randevu -f sql/00_kurulum.sql
 ```
 
-Dosya eski tabloları silip her şeyi baştan kurar, yani istendiği kadar tekrar çalıştırılabilir. pgAdmin kullanılacaksa dosyaları `00_kurulum.sql` içinde yazan sırayla Query Tool'da tek tek çalıştırmak gerekir.
+   - **Windows'ta** `psql` komutu bulunamazsa tam yolunu yaz:
+     `"C:\Program Files\PostgreSQL\18\bin\psql.exe" -U postgres -d hastane_randevu -f sql/00_kurulum.sql`
+   - **Mac'te** tam yol: `/Library/PostgreSQL/18/bin/psql`
+   - Dosya eski tabloları silip her şeyi baştan kurar, yani istendiği kadar tekrar çalıştırılabilir (örnek veriler sıfırlanır).
+   - pgAdmin kullanılacaksa dosyaları `00_kurulum.sql` içinde yazan sırayla Query Tool'da tek tek çalıştır.
+
+4. Gerekli Python kütüphanesini kur:
+
+```
+python -m pip install -r requirements.txt
+```
+
+5. `app` klasöründeki `config.example.py` dosyasını aynı klasöre `config.py` adıyla kopyala ve `"password"` kısmına kendi postgres şifreni yaz. `config.py` GitHub'a yüklenmez.
+6. Bağlantıyı test et ve uygulamayı aç:
+
+```
+cd app
+python db.py
+python main.py
+```
+
+`python db.py` PostgreSQL sürümünü ve her tablodaki kayıt sayısını yazarsa bağlantı tamamdır. `python main.py` ana menüyü açar. Mac'te komutlar `python3` olarak yazılır.
 
 ## Ekip
 
