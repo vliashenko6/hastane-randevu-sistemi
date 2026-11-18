@@ -2,10 +2,11 @@
 
 Hazırlayan: Veronika (Eray ve Sude'nin modülleriyle birlikte)
 
-Sistemi iki tür kullanıcı kullanır:
+Sistemi üç tür kullanıcı kullanır:
 
 - **Danışma görevlisi:** Hasta kaydını yapar, randevu verir ve iptal eder.
 - **Doktor:** Kendi randevularını görür, muayene ve teşhis girer, reçete yazar.
+- **Hastane yöneticisi:** İstatistikleri görüntüler (FG-23, FG-24, FG-25).
 
 ## Hasta işlemleri (Eray)
 
