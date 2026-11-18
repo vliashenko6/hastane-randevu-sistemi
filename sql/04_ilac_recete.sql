@@ -1,4 +1,4 @@
--- İlaç, reçete ve recete_ilac tabloları
+-- İlaç, reçete ve recete_ilac tabloları, recete_detay görünümü
 -- Hazırlayan: Veronika
 -- Çalıştırma sırası: 7. dosya (önce 03_muayene_teshis.sql çalışmalı, reçete muayeneye bağlı)
 -- Örnek veriler sql/veri/04_ilac_recete_veri.sql dosyasında.
@@ -47,3 +47,25 @@ CREATE TABLE recete_ilac (
     CONSTRAINT fk_recete_ilac_ilac FOREIGN KEY (ilac_id)
         REFERENCES ilac (ilac_id) ON DELETE RESTRICT
 );
+
+-- Reçete detay görünümü (VIEW)
+-- Reçeteyi hasta, doktor ve ilaç bilgileriyle birlikte gösteren uzun JOIN'i
+-- bir görünüm olarak kaydediyoruz. Uygulamadaki reçete ekranı ve
+-- "hastanın geçmiş reçeteleri" (FG-21) bu görünümü kullanır.
+CREATE VIEW recete_detay AS
+SELECT r.recete_id,
+       r.recete_tarihi,
+       h.hasta_id,
+       h.ad || ' ' || h.soyad                 AS hasta,
+       d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
+       i.ilac_adi,
+       ri.doz,
+       ri.kullanim_sekli,
+       ri.kutu_adedi
+FROM recete r
+JOIN muayene m ON m.muayene_id = r.muayene_id
+JOIN randevu ra ON ra.randevu_id = m.randevu_id
+JOIN hasta h ON h.hasta_id = ra.hasta_id
+JOIN doktor d ON d.doktor_id = ra.doktor_id
+JOIN recete_ilac ri ON ri.recete_id = r.recete_id
+JOIN ilac i ON i.ilac_id = ri.ilac_id;

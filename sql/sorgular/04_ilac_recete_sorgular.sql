@@ -69,28 +69,10 @@ HAVING COUNT(*) > (
 )
 ORDER BY ilac_sayisi DESC, ri.recete_id;
 
--- Sorgu 6: VIEW örneği - reçete detay görünümü
--- Sık kullanılan uzun JOIN'i bir görünüm (view) olarak kaydediyoruz.
--- Uygulamadaki reçete ekranı ve "hastanın geçmiş reçeteleri" (FG-21) bu görünümü kullanabilir.
-CREATE OR REPLACE VIEW recete_detay AS
-SELECT r.recete_id,
-       r.recete_tarihi,
-       h.hasta_id,
-       h.ad || ' ' || h.soyad                 AS hasta,
-       d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
-       i.ilac_adi,
-       ri.doz,
-       ri.kullanim_sekli,
-       ri.kutu_adedi
-FROM recete r
-JOIN muayene m ON m.muayene_id = r.muayene_id
-JOIN randevu ra ON ra.randevu_id = m.randevu_id
-JOIN hasta h ON h.hasta_id = ra.hasta_id
-JOIN doktor d ON d.doktor_id = ra.doktor_id
-JOIN recete_ilac ri ON ri.recete_id = r.recete_id
-JOIN ilac i ON i.ilac_id = ri.ilac_id;
-
--- Görünümün kullanımı: 3 numaralı hastaya yazılmış tüm ilaçlar
+-- Sorgu 6: VIEW örneği - 3 numaralı hastaya yazılmış tüm ilaçlar
+-- recete_detay görünümü sql/04_ilac_recete.sql dosyasında tablolarla birlikte oluşturuluyor.
+-- Görünüm reçete, muayene, randevu, hasta, doktor ve ilaç tablolarını birleştiren uzun JOIN'i
+-- saklıyor. Burada onu tek bir tablo gibi kısa bir SELECT ile kullanıyoruz.
 SELECT recete_id, recete_tarihi, doktor, ilac_adi, doz
 FROM recete_detay
 WHERE hasta_id = 3
