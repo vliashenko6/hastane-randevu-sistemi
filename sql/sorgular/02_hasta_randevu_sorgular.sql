@@ -20,7 +20,7 @@ ORDER BY r.randevu_saati;
 SELECT r.randevu_tarihi,
        r.randevu_saati,
        b.bolum_adi,
-       d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
+       COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad AS doktor,
        r.durum
 FROM randevu r
 JOIN doktor d ON d.doktor_id = r.doktor_id
