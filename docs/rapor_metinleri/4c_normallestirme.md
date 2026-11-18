@@ -27,7 +27,7 @@ Bir tablonun 1NF'de olması için her hücrede tek (atomik) bir değer olmalı, 
 
 Tabloyu 1NF'ye getirmek için çok değerli `teshisler` ve `ilaclar` sütunlarını ayrı satırlara ayırdık:
 
-- Bir muayenede birden fazla teşhis konabildiği için teşhisleri ayrı bir **teshis** tablosuna taşıdık. Her satır tek bir teşhis tutuyor (teshis_kodu, teshis_adi).
+- Bir muayenede birden fazla teşhis konabildiği için her teşhisi ayrı bir satırda tuttuk. Her satırın kendi numarası var ve hangi muayeneye ait olduğunu gösteriyor (teshis_id, muayene_id, teshis_kodu, teshis_adi).
 - Bir reçetede birden fazla ilaç olabildiği için her ilaç ayrı bir satırda tutuluyor. Bu satırlar daha sonra **recete_ilac** tablosu oldu.
 - Hasta adı ve soyadı tek sütunda değil, `ad` ve `soyad` olarak iki ayrı sütunda tutuluyor.
 
@@ -59,13 +59,15 @@ Bu yüzden tabloyu ikiye böldük:
 
 Böylece bir ilacın adı ya da etken maddesi tek bir yerde tutuluyor. İlaç bilgisi değişirse sadece ilac tablosunda bir satır güncelleniyor. Reçete ile ilaç arasındaki çoka çok (N–N) ilişki de recete_ilac ara tablosuyla kurulmuş oluyor.
 
-Projedeki diğer tablolarda birincil anahtar tek sütundan (hasta_id, doktor_id, randevu_id vb.) oluştuğu için kısmi bağımlılık oluşamaz. Bu tablolar 1NF'de oldukları için doğrudan 2NF'dedir.
+Bu aşamada diğer tablolarda (teşhis satırları dahil) birincil anahtar tek sütundan (hasta_id, doktor_id, randevu_id, teshis_id vb.) oluştuğu için kısmi bağımlılık oluşamaz. Bu tablolar 1NF'de oldukları için doğrudan 2NF'dedir.
 
 ## Üçüncü Normal Form (3NF)
 
 Bir tablonun 3NF'de olması için önce 2NF'de olması, ayrıca anahtar olmayan hiçbir sütunun başka bir anahtar olmayan sütuna bağlı olmaması gerekir. A → B ve B → C ise C, A'ya B üzerinden dolaylı olarak bağlıdır. Buna **geçişli bağımlılık** denir.
 
-Örnek olarak doktor bilgisini başlangıçtaki gibi bölüm adıyla birlikte tutsaydık:
+### Örnek 1: Doktor ve bölüm
+
+Doktor bilgisini başlangıçtaki gibi bölüm adıyla birlikte tutsaydık:
 
 **DOKTOR** (doktor_id, ad, soyad, unvan, telefon, bolum_id, bolum_adi)
 
@@ -82,18 +84,39 @@ Bu yüzden bölüm bilgisini ayrı bir tabloya taşıdık:
 - **bolum** (bolum_id, bolum_adi)
 - **doktor** (doktor_id, bolum_id, ad, soyad, unvan, telefon)
 
+### Örnek 2: Teşhis ve teşhis kataloğu
+
+1NF'de teşhisleri her muayene için ayrı satırlarda tutmuştuk:
+
+**TESHIS** (teshis_id, muayene_id, teshis_kodu, teshis_adi)
+
+| teshis_id | muayene_id | teshis_kodu | teshis_adi |
+|---|---|---|---|
+| 1 | 1 | J06.9 | Akut üst solunum yolu enfeksiyonu |
+| 2 | 1 | R50.9 | Ateş |
+| 3 | 2 | J06.9 | Akut üst solunum yolu enfeksiyonu |
+
+Burada `teshis_id → teshis_kodu` ve `teshis_kodu → teshis_adi` bağımlılıkları var. ICD-10 kodu teşhisin adını belirler; J06.9 her zaman aynı hastalıktır. Yani `teshis_adi`, teshis_id'ye doğrudan değil teşhis kodu üzerinden bağlı. Bu da bir geçişli bağımlılıktır. Bu yüzden "Akut üst solunum yolu enfeksiyonu" her muayenede yeniden yazılıyor, bir teşhisin adı düzeltilirse bütün satırların güncellenmesi gerekiyor ve henüz hiçbir muayenede konmamış bir teşhis sisteme eklenemiyor.
+
+Bu yüzden teşhisleri bir katalog tablosuna aldık ve muayene ile teşhisi bir ara tabloyla bağladık:
+
+- **teshis** (teshis_kodu, teshis_adi): ICD-10 teşhis listesi. Her teşhisin adı sadece bir kez yazılıyor.
+- **muayene_teshis** (muayene_id, teshis_kodu, aciklama): Hangi muayenede hangi teşhisin konduğunu tutuyor. Birincil anahtar (muayene_id, teshis_kodu) ikilisi, yani aynı teşhis aynı muayeneye iki kez eklenemiyor. `aciklama` sütunu doktorun o muayenedeki o teşhisle ilgili notu olduğu için anahtarın tamamına bağlı.
+
+Bir muayenede birden fazla teşhis, bir teşhis de birden fazla muayenede olabildiği için muayene ile teşhis arasında çoka çok (N–N) bir ilişki var. Bunu tıpkı recete–ilac ilişkisinde olduğu gibi muayene_teshis ara tablosuyla kurduk.
+
+### Diğer tablolar
+
 Aynı mantıkla:
 
 - Randevu tablosunda hastanın adı, soyadı ve telefonu tutulmuyor; sadece `hasta_id` tutuluyor. Hasta bilgileri **hasta** tablosunda.
 - Randevu tablosunda bölüm adı tutulmuyor. Randevunun hangi bölüme ait olduğu `doktor_id` üzerinden doktor ve bölüm tablolarından bulunuyor.
 - Reçete tablosunda hasta ve doktor bilgisi tutulmuyor. Reçetenin kime ve kim tarafından yazıldığı `muayene_id → randevu_id → hasta_id, doktor_id` yoluyla bulunuyor.
-- Muayenede konulan teşhisler muayene tablosunda değil, **teshis** tablosunda `muayene_id` ile tutuluyor.
-
-**Teşhis tablosu hakkında not:** teshis tablosunda `teshis_kodu` (örn. J06.9) ve `teshis_adi` birlikte tutuluyor. Teşhis kodu zorunlu değil ve teşhis adını doktor muayenede kendisi yazıyor. Yani aynı kod için farklı doktorlar farklı ifadeler yazabiliyor; kod, adı tek başına belirlemiyor. Bu yüzden `teshis_kodu → teshis_adi` diye bir bağımlılık kabul etmedik ve tablo 3NF'de kalıyor. Teşhisler ileride sabit bir ICD-10 listesinden seçilecek olursa, kod ve ad ayrı bir katalog tablosuna taşınmalıdır.
+- Muayenede konulan teşhisler muayene tablosunda değil, **muayene_teshis** tablosunda `muayene_id` ve `teshis_kodu` ile tutuluyor. Teşhisin adı ise sadece **teshis** tablosunda.
 
 ## Sonuç
 
-Normalleştirme sonunda tek büyük tablo dokuz tabloya ayrıldı. Her tablonun birincil anahtarı ve bağımlılıkları aşağıda özetlenmiştir:
+Normalleştirme sonunda tek büyük tablo on tabloya ayrıldı. Her tablonun birincil anahtarı ve bağımlılıkları aşağıda özetlenmiştir:
 
 | Tablo | Birincil anahtar | Bağımlılık | Normal form |
 |---|---|---|---|
@@ -102,11 +125,12 @@ Normalleştirme sonunda tek büyük tablo dokuz tabloya ayrıldı. Her tablonun 
 | doktor | doktor_id | doktor_id → bolum_id, ad, soyad, unvan, telefon | 3NF |
 | randevu | randevu_id | randevu_id → hasta_id, doktor_id, randevu_tarihi, randevu_saati, durum | 3NF |
 | muayene | muayene_id | muayene_id → randevu_id, muayene_tarihi, sikayet, notlar | 3NF |
-| teshis | teshis_id | teshis_id → muayene_id, teshis_kodu, teshis_adi | 3NF |
+| teshis | teshis_kodu | teshis_kodu → teshis_adi | 3NF |
+| muayene_teshis | (muayene_id, teshis_kodu) | (muayene_id, teshis_kodu) → aciklama | 3NF |
 | ilac | ilac_id | ilac_id → ilac_adi, etken_madde, ilac_formu | 3NF |
 | recete | recete_id | recete_id → muayene_id, recete_tarihi, aciklama | 3NF |
 | recete_ilac | (recete_id, ilac_id) | (recete_id, ilac_id) → doz, kullanim_sekli, kutu_adedi | 3NF |
 
 `hasta` tablosunda `tc_no`, `bolum` tablosunda `bolum_adi`, `ilac` tablosunda `ilac_adi`, `muayene` ve `recete` tablosunda ise `randevu_id` ve `muayene_id` da tekrar edemez. Bunlar aday anahtardır. Hepsi kendi satırını tek başına belirlediği için 3NF kuralını bozmaz.
 
-Sonuç olarak tüm tablolarımız 3NF'dedir. Her bilgi tek bir yerde tutulduğu için tekrar azaldı. Bir hasta, doktor, bölüm ya da ilaç bilgisi değiştiğinde yalnızca bir satır güncelleniyor. Henüz randevusu olmayan bir doktor veya hiç yazılmamış bir ilaç da sisteme eklenebiliyor.
+Sonuç olarak tüm tablolarımız 3NF'dedir. Her bilgi tek bir yerde tutulduğu için tekrar azaldı. Bir hasta, doktor, bölüm, teşhis ya da ilaç bilgisi değiştiğinde yalnızca bir satır güncelleniyor. Henüz randevusu olmayan bir doktor, hiç konmamış bir teşhis veya hiç yazılmamış bir ilaç da sisteme eklenebiliyor.
