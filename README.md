@@ -15,9 +15,9 @@ Projede hayali bir müşteri olarak Doğuş Özel Hastanesi'ni seçtik. Hastaned
 
 ## Tablolar
 
-hasta, randevu, bolum, doktor, muayene, teshis, ilac, recete, recete_ilac
+hasta, randevu, bolum, doktor, muayene, teshis, muayene_teshis, ilac, recete, recete_ilac
 
-Reçete ile ilaç arasında çoka çok ilişki var, bunu recete_ilac tablosuyla bağlıyoruz.
+İki tane çoka çok ilişki var: reçete ile ilaç arasındakini recete_ilac, muayene ile teşhis arasındakini muayene_teshis tablosuyla bağlıyoruz.
 
 ## Kullandıklarımız
 

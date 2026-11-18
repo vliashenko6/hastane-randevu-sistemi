@@ -32,7 +32,7 @@ Sistemi iki tür kullanıcı kullanır:
 - FG-12: Doktor, seçtiği gündeki randevularını saat sırasıyla görebilmelidir.
 - FG-13: Doktor bir randevu için muayene kaydı (şikâyet, notlar) girebilmelidir. Bir randevu için sadece bir muayene açılabilmelidir.
 - FG-14: Muayene kaydedilince randevunun durumu "tamamlandı" olmalıdır.
-- FG-15: Doktor bir muayeneye bir veya birden fazla teşhis ekleyebilmelidir.
+- FG-15: Doktor bir muayeneye, teşhis listesinden (ICD-10 kodu ve adıyla) seçerek bir veya birden fazla teşhis ekleyebilmelidir. Aynı teşhis aynı muayeneye iki kez eklenememelidir.
 - FG-16: Bir hastanın geçmiş muayeneleri ve teşhisleri görüntülenebilmelidir.
 
 ## Reçete ve ilaç (Veronika)
