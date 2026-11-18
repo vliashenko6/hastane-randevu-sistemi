@@ -34,7 +34,7 @@ class ReceteEkrani(tk.Toplevel):
         ust.pack(fill="x", padx=10, pady=(10, 5))
         self.muayeneler = db.getir(
             "SELECT m.muayene_id, m.muayene_tarihi, h.ad || ' ' || h.soyad, "
-            "       d.unvan || ' ' || d.ad || ' ' || d.soyad "
+            "       COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad "
             "FROM muayene m "
             "JOIN randevu r ON r.randevu_id = m.randevu_id "
             "JOIN hasta h ON h.hasta_id = r.hasta_id "

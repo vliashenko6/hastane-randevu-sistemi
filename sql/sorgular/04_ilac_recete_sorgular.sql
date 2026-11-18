@@ -34,7 +34,7 @@ ORDER BY i.ilac_adi;
 SELECT r.recete_id,
        r.recete_tarihi,
        h.ad || ' ' || h.soyad                 AS hasta,
-       d.unvan || ' ' || d.ad || ' ' || d.soyad AS doktor,
+       COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad AS doktor,
        b.bolum_adi
 FROM recete r
 JOIN muayene m ON m.muayene_id = r.muayene_id

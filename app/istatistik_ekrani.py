@@ -28,7 +28,7 @@ ISTATISTIKLER = [
      "GROUP BY b.bolum_id, b.bolum_adi "
      "ORDER BY COUNT(DISTINCT r.hasta_id) DESC, b.bolum_adi"),
     ("Doktor Başına Muayene", ("Doktor", "Bölüm", "Muayene sayısı"),
-     "SELECT d.unvan || ' ' || d.ad || ' ' || d.soyad, b.bolum_adi, COUNT(m.muayene_id) "
+     "SELECT COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad, b.bolum_adi, COUNT(m.muayene_id) "
      "FROM doktor d "
      "JOIN bolum b ON b.bolum_id = d.bolum_id "
      "LEFT JOIN randevu r ON r.doktor_id = d.doktor_id "
