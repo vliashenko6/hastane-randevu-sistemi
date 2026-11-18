@@ -1,5 +1,5 @@
 -- Muayene, teşhis ve muayene_teshis tabloları
--- Hazırlayan: Eray
+-- Hazırlayan: Sude (ilk sürüm: Eray)
 -- Çalıştırma sırası: 3. dosya (01_bolum_doktor.sql ve 02_hasta_randevu.sql çalıştırılmış olmalı)
 
 CREATE TABLE muayene (
@@ -59,7 +59,11 @@ INSERT INTO teshis (teshis_kodu, teshis_adi) VALUES
     ('M54.5', 'Bel ağrısı'),
     ('M17.9', 'Diz osteoartriti'),
     ('H52.1', 'Miyopi'),
-    ('H10.9', 'Konjonktivit');
+    ('H10.9', 'Konjonktivit'),
+    ('R00.2', 'Çarpıntı'),
+    ('R11',   'Bulantı ve kusma'),
+    ('J01.9', 'Akut sinüzit'),
+    ('H66.9', 'Otitis media');
 
 -- Muayene tarihi, bağlı olduğu randevunun tarihiyle aynı alınır.
 INSERT INTO muayene (muayene_id, randevu_id, muayene_tarihi, sikayet, notlar)
@@ -80,16 +84,28 @@ JOIN randevu r ON r.randevu_id = v.randevu_id;
 
 INSERT INTO muayene_teshis (muayene_id, teshis_kodu, aciklama) VALUES
     (1,  'R07.4', 'Kalp kaynaklı olup olmadığı test ile bakılacak'),
+    (1,  'R00.2', NULL),
+    (1,  'I20.9', 'Ön tanı, efor testi sonucuna göre kesinleşecek'),
     (2,  'I10',   NULL),
+    (2,  'R00.2', 'Tansiyon yükseldiğinde oluyor'),
     (3,  'E11.9', NULL),
     (3,  'I10',   'Şeker hastalığına eşlik ediyor'),
     (4,  'K29.7', NULL),
+    (4,  'R11',   NULL),
     (5,  'M54.5', NULL),
     (6,  'M17.9', 'Sağ diz'),
+    (6,  'M54.5', 'Hafif bel ağrısı da var'),
     (7,  'H52.1', NULL),
     (8,  'H10.9', NULL),
+    (8,  'J06.9', 'Soğuk algınlığı ile birlikte başlamış'),
     (9,  'J03.9', NULL),
     (9,  'J06.9', NULL),
-    (10, 'J06.9', NULL);
+    (9,  'H66.9', 'Sol kulak'),
+    (10, 'J06.9', NULL),
+    (10, 'J01.9', NULL);
+
+-- Test: aynı teşhis aynı muayeneye ikinci kez eklenemez.
+-- Çalıştırınca birincil anahtar (pk_muayene_teshis) hatası vermesi beklenir.
+-- INSERT INTO muayene_teshis (muayene_id, teshis_kodu) VALUES (2, 'I10');
 
 SELECT setval(pg_get_serial_sequence('muayene', 'muayene_id'), (SELECT MAX(muayene_id) FROM muayene));
