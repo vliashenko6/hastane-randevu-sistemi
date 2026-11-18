@@ -54,25 +54,37 @@ Randevusuna gelen hastanın doktor tarafından muayene edilmesi bu tabloda kayde
 
 ## Teşhis (teshis)
 
-Doktorun muayene sonunda koyduğu teşhisler bu tabloda tutulur. Bir muayenede birden fazla teşhis konabileceği için teşhisleri ayrı bir tabloda tutuyoruz.
+Doktorların koyabileceği teşhislerin listesi bu tabloda tutulur. Bu tablo bir katalogdur, yani ICD-10 teşhis listesini tutar. Muayeneye bağlı değildir; hangi muayenede hangi teşhisin konduğu muayene_teshis tablosunda tutulur.
 
-- Her teşhisin kendine ait bir numarası vardır (teshis_id).
-- Her teşhis bir muayeneye bağlıdır (muayene_id). Boş bırakılamaz.
-- Teşhisin adı tutulur (teshis_adi), örneğin "Akut üst solunum yolu enfeksiyonu". Boş bırakılamaz.
-- Teşhisin ICD-10 kodu tutulur (teshis_kodu), örneğin "J06.9". Boş olabilir.
+- Her teşhisin bir ICD-10 kodu vardır (teshis_kodu), örneğin "J06.9". Bu kod her teşhis için farklıdır ve teşhisi ayırt etmek için kullanılır.
+- Her teşhisin bir adı vardır (teshis_adi), örneğin "Akut üst solunum yolu enfeksiyonu". Boş bırakılamaz.
+- Bir teşhisin adı sadece bu tabloda yazılır. Böylece aynı teşhis her muayenede tekrar tekrar yazılmaz.
 
 | Sütun | Açıklama | Kural |
 |---|---|---|
-| teshis_id | Teşhisin numarası | Birincil anahtar |
-| muayene_id | Teşhisin konduğu muayene | Yabancı anahtar (muayene), boş olamaz |
-| teshis_kodu | ICD-10 kodu, örn. J06.9 | Boş olabilir |
+| teshis_kodu | ICD-10 kodu, örn. J06.9 | Birincil anahtar |
 | teshis_adi | Teşhisin adı | Boş olamaz |
+
+## Muayene–Teşhis (muayene_teshis)
+
+Bir muayenede birden fazla teşhis konabilir, aynı teşhis de birçok farklı muayenede konabilir. Yani muayene ile teşhis arasında çoka çok (N–N) ilişki vardır. Bu ilişkiyi muayene_teshis ara tablosuyla tutuyoruz. Bu tablodaki her satır "şu muayenede şu teşhis kondu" anlamına gelir.
+
+- Her satırda muayenenin numarası (muayene_id) ve teşhisin kodu (teshis_kodu) bulunur. İkisi de boş bırakılamaz.
+- Aynı teşhis aynı muayeneye iki kez eklenemez. Bu yüzden birincil anahtar (muayene_id, teshis_kodu) ikilisidir.
+- Doktor isterse o teşhisle ilgili kısa bir not ekleyebilir (aciklama), örneğin "Hafif seyirli". Boş olabilir.
+- Açıklama bu tabloda durur, çünkü ne sadece muayenenin ne de sadece teşhisin bilgisidir; o muayenede konan o teşhise aittir.
+
+| Sütun | Açıklama | Kural |
+|---|---|---|
+| muayene_id | Hangi muayene | Yabancı anahtar (muayene), birincil anahtarın parçası |
+| teshis_kodu | Hangi teşhis | Yabancı anahtar (teshis), birincil anahtarın parçası |
+| aciklama | Doktorun o teşhisle ilgili notu | Boş olabilir |
 
 ## İlişkiler
 
 - bolum – doktor: Bir bölümde birden fazla doktor çalışır (1 – N).
 - doktor – randevu: Bir doktorun birden fazla randevusu olabilir (1 – N).
 - randevu – muayene: Bir randevudan en fazla bir muayene çıkar (1 – 1).
-- muayene – teshis: Bir muayenede birden fazla teşhis konabilir (1 – N).
+- muayene – teshis: N – N (muayene_teshis ara tablosu ile).
 - muayene – recete: Bir muayenede en fazla bir reçete yazılır (1 – 1).
 - İçinde doktor olan bir bölüm silinemez.
