@@ -1,6 +1,6 @@
 # 2- Kullanılan Teknolojiler
 
-**PostgreSQL 18.** PostgreSQL, açık kaynaklı bir ilişkisel veritabanı yönetim sistemidir. Projede hasta, doktor, randevu, muayene gibi tüm verileri tek bir veritabanında tutmak için kullandık. Birincil anahtar, yabancı anahtar ve CHECK gibi kısıtlamalar sayesinde çift randevu gibi hataları veritabanı seviyesinde engelleyebiliyoruz.
+**PostgreSQL 18.** PostgreSQL, açık kaynaklı bir ilişkisel veritabanı yönetim sistemidir. Projede hasta, doktor, randevu, muayene gibi tüm verileri tek bir veritabanında tutmak için kullandık. Birincil anahtar, yabancı anahtar, UNIQUE ve CHECK gibi kısıtlamalar sayesinde çift randevu gibi hataları veritabanı seviyesinde engelleyebiliyoruz.
 
 **pgAdmin 4.** pgAdmin, PostgreSQL'i görsel olarak yönetmeye yarayan bir araçtır. Tabloları oluştururken, sorguları denerken ve verileri kontrol ederken kullandık. Komut satırına göre daha rahat olduğu için ekip olarak tercih ettik.
 
