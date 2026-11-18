@@ -23,7 +23,7 @@ Diyagramda dokuz sınıf var:
 - **IstatistikEkrani:** Yönetici için istatistikleri gösterir (istatistikleri_getir()).
 - **Veritabani:** PostgreSQL bağlantısını yöneten sınıf (db.py). getir(), getir_tek(), calistir(), ekle() ve hata_mesaji() metotlarını içerir. baglanti alanında açık bağlantıyı tutar.
 
-Sekiz ekran sınıfı tk.Toplevel'dan türer, yani ana menüden açılan ayrı birer pencere olarak çalışır. Hepsinin yapıcısı ana pencereyi alır ve ana_pencere alanında saklar. Bu alan sadece sınıfın kendi içinde kullanıldığı için başında - işareti var. Metotların hepsi ekran tarafından çağrıldığı için + ile gösterildi.
+Yedi ekran sınıfı tk.Toplevel'dan türer, yani ana menüden açılan ayrı birer pencere olarak çalışır. Hepsinin yapıcısı ana pencereyi alır ve ana_pencere alanında saklar. Bu alan sadece sınıfın kendi içinde kullanıldığı için başında - işareti var. Metotların hepsi ekran tarafından çağrıldığı için + ile gösterildi.
 
 ## İlişkiler
 
