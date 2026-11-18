@@ -76,7 +76,7 @@ Süre: yaklaşık 3–4 dakika
 
 | Sorun | Çözüm |
 |---|---|
-| Listede Emine Çetin yok ya da durumu "tamamlandi" | Veritabanı sıfırlanmamış. Sunumu bekletmeden **Prof. Dr. Murat Kaya**, **02.12.2026** ile devam et (randevu 22, Ali Erdem, 10:00). Diğer yedek seçenekler: Cem Şahin 03.12.2026, Burak Çelik 04.12.2026, Oğuz Polat 05.12.2026. |
+| Listede Emine Çetin yok ya da durumu "tamamlandi" | Veritabanı sıfırlanmamış. Sunumu bekletmeden **Uzm. Dr. Murat Kaya**, **02.12.2026** ile devam et (randevu 22, Ali Erdem, 10:00). Diğer yedek seçenekler: Cem Şahin 03.12.2026, Burak Çelik 04.12.2026, Oğuz Polat 05.12.2026. |
 | "Bu randevu için zaten bir muayene kaydı var." | Aynı şey: başka bir aktif randevu seç. |
 | Bağlantı hatası | PostgreSQL servisini başlat, `app/config.py`'deki şifreyi kontrol et. |
 
