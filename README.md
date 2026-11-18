@@ -25,15 +25,29 @@ PostgreSQL, Python (psycopg2), Tkinter
 
 ## Klasörler
 
-- `sql/` → tablo oluşturma, veri ekleme ve sorgu dosyaları
+- `sql/` → tablo oluşturma dosyaları (CREATE TABLE) ve hepsini kuran `00_kurulum.sql`
+  - `sql/veri/` → örnek veriler (INSERT)
+  - `sql/sorgular/` → bilgi alma sorguları (SELECT)
 - `app/` → Python uygulaması
-- `docs/` → diyagramlar, proje planı ve notlar
+- `docs/` → gereksinimler, ER ve UML diyagramları, ilişkisel şema, proje planı
 - `rapor/` → proje raporu
+
+## Kurulum
+
+1. PostgreSQL ve Python kurulumu için: [docs/kurulum.md](docs/kurulum.md)
+2. `hastane_randevu` adında boş bir veritabanı oluştur.
+3. Repo klasöründe şu komutla bütün tabloları ve örnek verileri kur:
+
+```
+psql -U postgres -d hastane_randevu -f sql/00_kurulum.sql
+```
+
+Dosya eski tabloları silip her şeyi baştan kurar, yani istendiği kadar tekrar çalıştırılabilir. pgAdmin kullanılacaksa dosyaları `00_kurulum.sql` içinde yazan sırayla Query Tool'da tek tek çalıştırmak gerekir.
 
 ## Ekip
 
 - Veronika – reçete ve ilaç kısmı, veritabanı bağlantısı, ana menü
 - Eray – hasta ve randevu kısmı
-- Sude – doktor, bölüm ve muayene kısmı
+- Sude – bölüm, doktor, muayene ve teşhis kısmı
 
 İş dağılımı: [docs/Hastane_Randevu_Proje_Plani.pdf](docs/Hastane_Randevu_Proje_Plani.pdf)
