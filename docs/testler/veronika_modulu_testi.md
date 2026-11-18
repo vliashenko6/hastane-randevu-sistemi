@@ -25,7 +25,7 @@ Veritabanı `sql/00_kurulum.sql` ile baştan kuruldu, uygulama `python main.py` 
 | 14 | İstatistik ekranı (FG-23, FG-24, FG-25) | Üç sekme de dolu olmalı | ✅ |
 | 15 | Doktor başına muayene toplamı | Muayene tablosundaki kayıt sayısına eşit olmalı | ✅ |
 | 16 | Bölümlere göre hasta sayısı | Sude'nin sorgu 1 sonucuyla aynı olmalı | ✅ |
-| 17 | Unvanı boş bir doktor eklenince istatistik ekranı | Doktorun adı görünmeli | ❌ |
+| 17 | Unvanı boş bir doktor eklenince istatistik ekranı | Doktorun adı görünmeli | ❌ → ✅ düzeltildi (tekrar test edildi) |
 
 ## Bulunan hata
 
@@ -42,3 +42,5 @@ Aynı birleştirme şu yerlerde de var:
 Örnek verilerde bütün doktorların unvanı olduğu için şu an ekranda görünmüyor, ama unvansız yeni bir doktor eklenirse ortaya çıkar.
 
 Önerilen düzeltme: `COALESCE(d.unvan || ' ', '') || d.ad || ' ' || d.soyad` (Sude'nin doktor paneli ve muayene ekranında bu şekilde yazıldı).
+
+**Durum: Düzeltildi.** Veronika üç yeri de `COALESCE` ile düzeltti (commit 9d743e0). Aynı ifade Sude'nin `sql/sorgular/03_doktor_muayene_sorgular.sql` dosyasında da vardı (sorgu 2 ve 4), o da düzeltildi. Unvansız bir doktorla tekrar denendi: istatistik ekranında, reçete ekranının muayene listesinde, geçmiş reçetelerde ve sorgularda doktorun adı doğru görünüyor.
