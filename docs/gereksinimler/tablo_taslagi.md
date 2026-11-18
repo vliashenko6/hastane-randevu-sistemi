@@ -1,6 +1,6 @@
 # Ortak Tablo Taslağı
 
-Gereksinimleri yazarken herkes aynı tablo ve sütun isimlerini kullansın diye bu listeyi hazırladık. 3. adımda ER diyagramını çizerken gerekirse değiştireceğiz.
+Gereksinimleri yazarken herkes aynı tablo ve sütun isimlerini kullansın diye bu listeyi hazırladık. Tasarım bittikten sonra liste kesinleşti; sql/ klasöründeki CREATE TABLE dosyalarıyla birebir aynıdır.
 
 İsimler küçük harf, Türkçe karakter yok, kelimeler alt çizgiyle ayrılıyor.
 
