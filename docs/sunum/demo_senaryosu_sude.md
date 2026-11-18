@@ -40,7 +40,7 @@ Süre: yaklaşık 3–4 dakika
 |---|---|
 | Ana menüde **Doktor Paneli** | "Doktor burada kendi gününü görüyor." |
 | Doktor: **Prof. Dr. Hakan Aydın (Kardiyoloji)** | |
-| Tarih kutusunu sil, **2026-12-01** yaz, **Listele** | "1 Aralık'ta saat 09:00'da Emine Çetin'in randevusu var, durumu aktif, muayenesi yapılmamış." |
+| Tarih kutusunu sil, **01.12.2026** yaz, **Listele** | "1 Aralık'ta saat 09:00'da Emine Çetin'in randevusu var, durumu aktif, muayenesi yapılmamış." |
 | (İsteğe bağlı) | "Aynı saatte iptal edilmiş bir randevu daha var (randevu 19), ama iptal edilenler listede gösterilmiyor." |
 | **Emine Çetin** satırına çift tıkla | "Randevuya çift tıklayınca muayene ekranı açılıyor." |
 
@@ -76,7 +76,7 @@ Süre: yaklaşık 3–4 dakika
 
 | Sorun | Çözüm |
 |---|---|
-| Listede Emine Çetin yok ya da durumu "tamamlandi" | Veritabanı sıfırlanmamış. Sunumu bekletmeden **Prof. Dr. Murat Kaya**, **2026-12-02** ile devam et (randevu 22, Ali Erdem, 10:00). Diğer yedek seçenekler: Cem Şahin 12-03, Burak Çelik 12-04, Oğuz Polat 12-05. |
+| Listede Emine Çetin yok ya da durumu "tamamlandi" | Veritabanı sıfırlanmamış. Sunumu bekletmeden **Prof. Dr. Murat Kaya**, **02.12.2026** ile devam et (randevu 22, Ali Erdem, 10:00). Diğer yedek seçenekler: Cem Şahin 03.12.2026, Burak Çelik 04.12.2026, Oğuz Polat 05.12.2026. |
 | "Bu randevu için zaten bir muayene kaydı var." | Aynı şey: başka bir aktif randevu seç. |
 | Bağlantı hatası | PostgreSQL servisini başlat, `app/config.py`'deki şifreyi kontrol et. |
 

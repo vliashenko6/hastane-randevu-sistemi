@@ -16,7 +16,7 @@ Ana menüdeki "Bölümler ve Doktorlar" düğmesiyle açılır.
 
 Doktorun bir gündeki randevularını gördüğü ekran (FG-12).
 
-- Doktor listeden seçilir; listede doktorun unvanı ve bölümü de yazar. Tarih YYYY-AA-GG biçiminde girilir, açılışta bugünün tarihi yazılıdır.
+- Doktor listeden seçilir; listede doktorun unvanı ve bölümü de yazar. Tarih, hasta ve randevu ekranlarındaki gibi GG.AA.YYYY biçiminde girilir (YYYY-AA-GG de kabul edilir); açılışta bugünün tarihi yazılıdır.
 - "Listele" düğmesine basınca o günkü randevular saat sırasıyla gelir. İptal edilen randevular listede gösterilmez.
 - Her randevuda hastanın adı, TC kimlik numarası, randevu durumu ve muayenenin yapılıp yapılmadığı görünür. Görüntüde Prof. Dr. Hakan Aydın'ın 3 Kasım 2026'daki iki randevusu var, ikisinin de muayenesi yapılmış.
 - Tarih yanlış biçimde yazılırsa uyarı verilir (FG-27).
