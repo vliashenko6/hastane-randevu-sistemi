@@ -17,6 +17,18 @@ from db import db
 from muayene_ekrani import MuayeneEkrani
 
 
+def tarih_oku(yazi):
+    """Tarihi GG.AA.YYYY (diğer ekranlardaki gibi) ya da YYYY-AA-GG biçiminde okur.
+    Geçersizse None döner."""
+    yazi = yazi.strip()
+    for bicim in ("%d.%m.%Y", "%Y-%m-%d"):
+        try:
+            return datetime.datetime.strptime(yazi, bicim).date()
+        except ValueError:
+            pass
+    return None
+
+
 class DoktorPaneli(tk.Toplevel):
 
     def __init__(self, ana_pencere):
@@ -33,9 +45,9 @@ class DoktorPaneli(tk.Toplevel):
         self.doktor_kutusu = ttk.Combobox(ust, state="readonly", width=40)
         self.doktor_kutusu.pack(side="left", padx=(5, 15))
 
-        ttk.Label(ust, text="Tarih (YYYY-AA-GG):").pack(side="left")
+        ttk.Label(ust, text="Tarih (GG.AA.YYYY):").pack(side="left")
         self.tarih_kutusu = ttk.Entry(ust, width=12)
-        self.tarih_kutusu.insert(0, datetime.date.today().isoformat())
+        self.tarih_kutusu.insert(0, datetime.date.today().strftime("%d.%m.%Y"))
         self.tarih_kutusu.pack(side="left", padx=5)
 
         ttk.Button(ust, text="Listele", command=self.gunluk_randevulari_getir).pack(side="left", padx=5)
@@ -91,10 +103,9 @@ class DoktorPaneli(tk.Toplevel):
             return
 
         # Tarihi kontrol et (FG-27: hatalı giriş kaydedilmesin, kullanıcı uyarılsın)
-        try:
-            tarih = datetime.date.fromisoformat(self.tarih_kutusu.get().strip())
-        except ValueError:
-            messagebox.showwarning("Uyarı", "Tarihi YYYY-AA-GG biçiminde yazın (örn. 2026-11-03).",
+        tarih = tarih_oku(self.tarih_kutusu.get())
+        if tarih is None:
+            messagebox.showwarning("Uyarı", "Tarihi GG.AA.YYYY biçiminde yazın (örn. 01.12.2026).",
                                    parent=self)
             return
 
